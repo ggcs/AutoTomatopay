@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	//"fmt"
 )
 
 var email = ""
@@ -65,7 +64,6 @@ func main() {
 	if  cny < 2 {
 		addLog("Must be greater than 2", true)
 	}
-	fmt.Println(token)
 ///////////////////////////////////
 //////////////////////////////////
 	requestBody = url.Values{}

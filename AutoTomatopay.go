@@ -101,7 +101,7 @@ func addLog(log string, exit bool) {
 
 	if exit {
 		allLog += "\n"
-		logFile, _ := os.OpenFile("1.log",
+		logFile, _ := os.OpenFile("AutoTomatopay.log",
 			os.O_APPEND|os.O_CREATE|os.O_WRONLY,
 			os.ModeAppend)
 		logFile.WriteString(allLog)

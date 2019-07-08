@@ -14,17 +14,14 @@ import (
 
 var email = ""
 var password = ""
-var method = "1" 
-var alipayLimit = 1000
-var wechatLimit = 0
+var upperLimit = 1000
+var lowerLimit = 0
 
 func main() {
 	urlHome := "https://b.fanqieui.com/"
 	client := &http.Client{}
 	rand.Seed(time.Now().UnixNano())
 	addLog(time.Now().String(), false)
-///////////////////////////////////
-//////////////////////////////////
 	requestBody := url.Values{}
 	requestBody.Set("email", email)
 	requestBody.Set("password", password)
@@ -43,8 +40,6 @@ func main() {
 	if responseBodyMap["code"] != "1" {
 		addLog("Login fail", true)
 	}
-///////////////////////////////////
-//////////////////////////////////
 	request, _ = http.NewRequest("GET", urlHome+"dashboard/withdrawal.php", nil)
 	for _, cookieIndex := range cookies {
 		request.AddCookie(cookieIndex)
@@ -58,14 +53,15 @@ func main() {
 	cny_s := GetBetweenStr(responseBodyString,"¥ ","\"")
 	cny_i,_:=strconv.ParseFloat(cny_s, 64)
 	cny := int(cny_i)
-	if method == "1" && cny > alipayLimit {
-		cny = alipayLimit
+	if  cny > upperLimit {
+		cny = upperLimit
 	}
 	if  cny < 2 {
 		addLog("Must be greater than 2", true)
 	}
-///////////////////////////////////
-//////////////////////////////////
+	if  cny < lowerLimit {
+		addLog("lowerLimit", true)
+	}
 	requestBody = url.Values{}
 	requestBody.Set("token", token)
 	requestBody.Set("cny", strconv.Itoa(cny))
@@ -86,8 +82,6 @@ func main() {
 	}
 	if responseBodyMap["code"] != "1" {
 		addLog("fail", true)
-	}else{
-		addLog("succee", true)
 	}
 }
 
